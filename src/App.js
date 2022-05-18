@@ -5,6 +5,7 @@ import Home from './Pages/Home';
 import SignUp from './Pages/SignUp';
 import Login from './Pages/Login';
 import Header from './Pages/Header';
+import RequireAuth from './Pages/RequireAuth';
 
 function App() {
 
@@ -23,7 +24,7 @@ function App() {
 
 
       <Routes>
-        <Route path='/' element={<Home></Home>}></Route>
+        <Route path='/' element={<RequireAuth><Home></Home></RequireAuth>}></Route>
 
         <Route path='login' element={<Login></Login>}></Route>
         <Route path='register' element={<SignUp></SignUp>}></Route>

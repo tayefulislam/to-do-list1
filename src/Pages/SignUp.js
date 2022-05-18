@@ -1,22 +1,56 @@
 import React from 'react';
 
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useCreateUserWithEmailAndPassword, useUpdateProfile } from 'react-firebase-hooks/auth';
+import auth from '../../src/firebase.init'
 
 
 
-
-const handleSubmit = (event) => {
-
-    event.preventDefault()
-
-
-
-
-
-
-}
 
 const SignUp = () => {
+
+
+
+    const [
+        createUserWithEmailAndPassword,
+        user,
+        loading,
+        error,
+    ] = useCreateUserWithEmailAndPassword(auth);
+
+
+
+    const [updateProfile, updating, updateError] = useUpdateProfile(auth);
+
+    let allError;
+    let navigate = useNavigate();
+
+
+    const handleSubmit = async (event) => {
+
+        event.preventDefault()
+
+        const name = event?.target?.name?.value;
+        const email = event?.target?.email?.value;
+        const password = event?.target?.password?.value;
+
+        await createUserWithEmailAndPassword(email, password);
+        await updateProfile({ displayName: name })
+
+
+
+
+    }
+
+
+    if (error || updateError) {
+        allError = `${error?.message || updateError?.message}`
+    }
+
+
+    if (user) {
+        navigate('/')
+    }
 
     return (
         <div className='flex justify-center items-center h-screen'>
@@ -35,6 +69,7 @@ const SignUp = () => {
 
                             <input type="text"
                                 placeholder="Your Name"
+                                name='name'
                                 className="input input-bordered w-full max-w-xs"
 
 
@@ -52,6 +87,7 @@ const SignUp = () => {
 
                             <input type="text"
                                 placeholder="Email Address"
+                                name='email'
                                 className="input input-bordered w-full max-w-xs"
 
                             />
@@ -67,6 +103,7 @@ const SignUp = () => {
 
                             <input type="password"
                                 placeholder="Password"
+                                name='password'
                                 className="input input-bordered w-full max-w-xs"
 
 
@@ -75,6 +112,8 @@ const SignUp = () => {
 
 
                         </div>
+
+                        <h1 className='text-white'>{allError}</h1>
 
 
                         <input className='  btn btn-glass w-full max-w-xs mt-2 font-bold text-white' type="submit" value="Sign Up" />

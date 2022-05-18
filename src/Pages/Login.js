@@ -1,13 +1,52 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
+
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import auth from '../firebase.init';
+import Loading from './Loading';
 
 const Login = () => {
+
+    const [
+        signInWithEmailAndPassword,
+        user,
+        loading,
+        error,
+    ] = useSignInWithEmailAndPassword(auth);
+
+    let navigate = useNavigate();
+    let location = useLocation();
+    let from = location.state?.from?.pathname || "/";
+
+    let allError;
+
+
+    if (loading) {
+        <Loading></Loading>
+    }
+
+
+    if (error) {
+        allError = `${error.message}`
+    }
+    if (user) {
+
+        navigate(from, { replace: true });
+
+    }
+
+
+
     const handleSubmit = (event) => {
 
         event.preventDefault()
 
+        const email = event?.target?.email?.value;
+        const password = event?.target?.password?.value;
 
+        console.log(email, password)
 
+        signInWithEmailAndPassword(email, password)
 
 
 
@@ -20,7 +59,7 @@ const Login = () => {
             <div className='flex justify-center items-center h-screen'>
                 <div className="card w-96 bg-base-100 shadow-xl">
                     <div className="card-body bg-blue-500">
-                        <h2 className="text-center text-2xl font-bold text-white">Sign Up</h2>
+                        <h2 className="text-center text-2xl font-bold text-white">Login</h2>
 
 
                         <form onSubmit={handleSubmit} >
@@ -36,6 +75,8 @@ const Login = () => {
 
                                 <input type="text"
                                     placeholder="Email Address"
+                                    name='email'
+                                    required
                                     className="input input-bordered w-full max-w-xs"
 
                                 />
@@ -51,6 +92,8 @@ const Login = () => {
 
                                 <input type="password"
                                     placeholder="Password"
+                                    name='password'
+                                    required
                                     className="input input-bordered w-full max-w-xs"
 
 
@@ -59,6 +102,8 @@ const Login = () => {
 
 
                             </div>
+
+                            <h1 className='text-white'>{allError}</h1>
 
 
                             <input className='  btn btn-glass w-full max-w-xs mt-2 font-bold text-white' type="submit" value="Login" />
