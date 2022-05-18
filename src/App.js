@@ -2,8 +2,14 @@
 import './App.css';
 import { Route, Routes } from 'react-router-dom';
 import Home from './Pages/Home';
+import SignUp from './Pages/SignUp';
+import Login from './Pages/Login';
+import Header from './Pages/Header';
 
 function App() {
+
+
+
 
 
 
@@ -13,9 +19,14 @@ function App() {
   return (
     <div className="App">
 
+      <Header></Header>
+
 
       <Routes>
         <Route path='/' element={<Home></Home>}></Route>
+
+        <Route path='login' element={<Login></Login>}></Route>
+        <Route path='register' element={<SignUp></SignUp>}></Route>
       </Routes>
 
 
