@@ -3,6 +3,7 @@
 
 # server side 
 /to-do-list-server/node_modules
+/to-do-list-server/.env
 
 
 # dependencies

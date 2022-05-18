@@ -1,10 +1,17 @@
 import React from 'react';
+import { useAuthState } from 'react-firebase-hooks/auth';
+
+import auth from '../../src/firebase.init'
 
 const AddTask = () => {
 
 
+    const [user, loading, error] = useAuthState(auth);
+
+
 
     const addTask = (event) => {
+
 
         event.preventDefault()
 
@@ -12,11 +19,22 @@ const AddTask = () => {
         const task = {
             name: event.target.name.value,
             description: event.target.description.value,
-            email: 'email',
+            email: user?.email,
             status: 'inprogress'
 
         }
         console.log(task)
+
+        const url = `http://localhost:5000/addTask`;
+
+
+        fetch(url, {
+            method: "POST",
+            headers: {
+                'content-type': "application/json"
+            },
+            body: JSON.stringify(task)
+        })
 
 
     }
