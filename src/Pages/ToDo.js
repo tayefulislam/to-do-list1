@@ -1,4 +1,5 @@
 import React from 'react';
+import { toast } from 'react-toastify';
 
 const ToDo = ({ task, refetch }) => {
 
@@ -6,6 +7,25 @@ const ToDo = ({ task, refetch }) => {
 
 
     const handleStatus = (id) => {
+        const url = `http://localhost:5000/status/${id}`;
+
+        fetch(url, {
+            method: "PUT",
+        })
+
+            .then(res => res.json())
+            .then(data => {
+                console.log(data)
+
+                if (data.modifiedCount === 1) {
+                    toast('This task is completed')
+                }
+            })
+
+
+
+
+
 
 
     }
@@ -15,8 +35,6 @@ const ToDo = ({ task, refetch }) => {
     const handelDelete = (id) => {
 
         console.log(id)
-
-
 
         const proccedd = window.confirm('Are You sure to delete this Task ?')
 
@@ -37,17 +55,28 @@ const ToDo = ({ task, refetch }) => {
     }
 
 
+
+
     return (
         <div>
             <div class="card w-full bg-neutral text-neutral-content">
                 <div class="card-body items-center text-center">
-                    <h2 class="card-title">{task?.name}</h2>
+
+                    {
+                        task?.status === 'done' ? <s class="card-title">{task?.name}</s> : <h2 class="card-title">{task?.name}</h2>
+                    }
+
+
+
+
                     <p>{task?.description}</p>
                     <div class="card-actions justify-end">
 
-                        <button onClick={() => handleStatus()} on class="btn btn-primary">Complete</button>
+                        {
+                            task?.status === 'done' ? <button class="btn btn-primary"> Done </button> : <button onClick={() => handleStatus(task?._id)} on class="btn btn-primary">Complete</button>
+                        }
 
-                        <button onClick={() => handelDelete(task._id)} class="btn btn-ghost">Delete</button>
+                        <button onClick={() => handelDelete(task?._id)} class="btn btn-ghost">Delete</button>
                     </div>
                 </div>
             </div>

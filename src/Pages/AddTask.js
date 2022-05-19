@@ -3,12 +3,9 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 
 import auth from '../../src/firebase.init'
 
-const AddTask = () => {
-
+const AddTask = ({ refetch }) => {
 
     const [user, loading, error] = useAuthState(auth);
-
-
 
     const addTask = (event) => {
 
@@ -35,6 +32,12 @@ const AddTask = () => {
             },
             body: JSON.stringify(task)
         })
+
+            .then(res => res.json())
+            .then(data => {
+                console.log(data)
+                refetch()
+            })
 
 
     }
