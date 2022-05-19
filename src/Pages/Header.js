@@ -13,7 +13,7 @@ const Header = () => {
         <div class="navbar bg-base-100">
             <div class="navbar-start">
 
-                <a className="btn btn-ghost normal-case text-xl">My To Do</a>
+                <Link to='/' className="btn btn-ghost normal-case text-xl">My To Do</Link>
             </div>
             <div class="navbar-center hidden lg:flex">
 

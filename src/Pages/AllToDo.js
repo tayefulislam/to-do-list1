@@ -1,46 +1,45 @@
 import React from 'react';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { QueryClient, QueryClientProvider, useQuery } from 'react-query'
+import auth from '../firebase.init';
+import ToDo from './ToDo';
 
 const AllToDo = () => {
+    const [user, loading, error] = useAuthState(auth);
+
+    const url = `http://localhost:5000/tasks/${user?.email}`
+
+    const { data: tasks, isLoading, refetch } = useQuery('allTasks', () => fetch(url, {
+
+    }).then(res => res.json()))
+
+
+    if (isLoading) {
+        return <loading></loading>
+    }
+
+    console.log(tasks)
+
+
+
     return (
         <div className='grid grid-cols-1 lg:grid-cols-3 px-12 gap-3'>
 
 
-            <div>
-                <div class="card w-full bg-neutral text-neutral-content">
-                    <div class="card-body items-center text-center">
-                        <h2 class="card-title">Cookies!</h2>
-                        <p>We are using cookies for no reason.</p>
-                        <div class="card-actions justify-end">
-                            <button class="btn btn-primary">Accept</button>
-                            <button class="btn btn-ghost">Deny</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div>
-                <div class="card w-full bg-neutral text-neutral-content">
-                    <div class="card-body items-center text-center">
-                        <h2 class="card-title">Cookies!</h2>
-                        <p>We are using cookies for no reason.</p>
-                        <div class="card-actions justify-end">
-                            <button class="btn btn-primary">Accept</button>
-                            <button class="btn btn-ghost">Deny</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div>
-                <div class="card w-full bg-neutral text-neutral-content">
-                    <div class="card-body items-center text-center">
-                        <h2 class="card-title">Cookies!</h2>
-                        <p>We are using cookies for no reason.</p>
-                        <div class="card-actions justify-end">
-                            <button class="btn btn-primary">Accept</button>
-                            <button class="btn btn-ghost">Deny</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
+
+            {
+                tasks.map(task => <ToDo
+
+                    key={task?._id}
+                    task={task}
+                    refetch={refetch}
+
+                ></ToDo>)
+            }
+
+
+
 
 
         </div>
