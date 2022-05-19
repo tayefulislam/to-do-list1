@@ -21,19 +21,7 @@ const Login = () => {
     let allError;
 
 
-    if (loading) {
-        <Loading></Loading>
-    }
 
-
-    if (error) {
-        allError = `${error.message}`
-    }
-    if (user) {
-
-        navigate(from, { replace: true });
-
-    }
 
 
 
@@ -49,6 +37,21 @@ const Login = () => {
         signInWithEmailAndPassword(email, password)
 
 
+
+    }
+
+    if (loading) {
+        <Loading></Loading>
+    }
+
+
+    if (error) {
+        allError = `${error.message}`
+    }
+
+    if (user) {
+
+        navigate(from, { replace: true });
 
     }
 

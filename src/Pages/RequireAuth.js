@@ -6,14 +6,14 @@ import Loading from '../../src/Pages/Loading'
 
 const RequireAuth = ({ children }) => {
 
+
     const [user, loading, error] = useAuthState(auth);
 
     let location = useLocation();
 
     if (loading) {
-        <Loading></Loading>
+        return <Loading></Loading>
     }
-
 
 
     if (!user) {

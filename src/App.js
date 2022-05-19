@@ -7,6 +7,9 @@ import Login from './Pages/Login';
 import Header from './Pages/Header';
 import RequireAuth from './Pages/RequireAuth';
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 function App() {
 
 
@@ -33,7 +36,7 @@ function App() {
 
 
 
-
+      <ToastContainer />
 
 
     </div>

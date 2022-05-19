@@ -22,7 +22,7 @@ const AddTask = ({ refetch }) => {
         }
         console.log(task)
 
-        const url = `http://localhost:5000/addTask`;
+        const url = `http://todoapi.priyopathshala.com/addTask`;
 
 
         fetch(url, {
@@ -36,7 +36,9 @@ const AddTask = ({ refetch }) => {
             .then(res => res.json())
             .then(data => {
                 console.log(data)
+
                 refetch()
+                event.target.reset()
             })
 
 
@@ -60,7 +62,7 @@ const AddTask = ({ refetch }) => {
                         <label class="label">
                             <span class="label-text text-2xl">Task Name</span>
                         </label>
-                        <input type="text" name='name' placeholder="Type here" class="input input-bordered w-full max-w-sm" />
+                        <input type="text" required name='name' placeholder="Type here" class="input input-bordered w-full max-w-sm" />
 
                     </div>
 
@@ -68,7 +70,7 @@ const AddTask = ({ refetch }) => {
                         <label class="label">
                             <span class="label-text text-2xl">Description</span>
                         </label>
-                        <textarea type="text" name='description' placeholder="Type here" class="input input-bordered w-full max-w-lg" />
+                        <textarea type="text" name='description' placeholder="Type here" required class="input input-bordered w-full max-w-lg" />
 
                     </div>
 

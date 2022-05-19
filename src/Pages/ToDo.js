@@ -7,7 +7,7 @@ const ToDo = ({ task, refetch }) => {
 
 
     const handleStatus = (id) => {
-        const url = `http://localhost:5000/status/${id}`;
+        const url = `http://todoapi.priyopathshala.com/status/${id}`;
 
         fetch(url, {
             method: "PUT",
@@ -18,7 +18,8 @@ const ToDo = ({ task, refetch }) => {
                 console.log(data)
 
                 if (data.modifiedCount === 1) {
-                    toast('This task is completed')
+                    refetch()
+                    toast.success('This task is completed')
                 }
             })
 
@@ -39,7 +40,7 @@ const ToDo = ({ task, refetch }) => {
         const proccedd = window.confirm('Are You sure to delete this Task ?')
 
         if (proccedd) {
-            const url = `http://localhost:5000/delete/${id}`;
+            const url = `http://todoapi.priyopathshala.com/delete/${id}`;
 
 
             fetch(url, {

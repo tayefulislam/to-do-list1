@@ -10,7 +10,7 @@ const Home = () => {
 
     const [user, loading, error] = useAuthState(auth);
 
-    const url = `http://localhost:5000/tasks/${user?.email}`
+    const url = `http://todoapi.priyopathshala.com/tasks/${user?.email}`
 
     const { data: tasks, isLoading, refetch } = useQuery('allTasks', () => fetch(url, {
 
